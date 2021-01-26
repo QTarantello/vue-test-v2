@@ -18,14 +18,14 @@
     <div class="table-body">
       <div v-for="user in users" :key="user.uuid">
         <div class="table-row">
-          <div class="table-row__cell">
+          <div @click="user.children.length !== 0 ? showChild() : null" class="table-row__cell">
             <span v-if="user.children.length !== 0">+</span>
             {{ user.name }}
           </div>
           <div class="table-row__cell">{{ user.phone }}</div>
         </div>
         <div v-for="child in user.children" :key="child.uuid">
-          <div class="table-row--child">
+          <div v-if="visible === true" class="table-row--child">
             <div class="table-row__cell--child">+ {{ child.name }}</div>
             <div class="table-row__cell--child">{{ child.phone }}</div>
           </div>
@@ -46,6 +46,16 @@ export default {
     },
     onSortUsers: {
       type: Function
+    }
+  },
+  data () {
+    return {
+      visible: false
+    }
+  },
+  methods: {
+    showChild () {
+      this.visible = !this.visible
     }
   }
 }
